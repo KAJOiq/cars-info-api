@@ -84,4 +84,4 @@ Fetch all records from the `users` table (or your relevant table in the Oracle d
 
 - **Request**:
   ```bash
-  curl -X GET http://localhost:5000/api/data
+  curl -X GET http://localhost:5000/api/auth/login
