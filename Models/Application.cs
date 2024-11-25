@@ -7,11 +7,12 @@ namespace ApiAppPay.Models
         
 
         public string Application_ID { get; set; }
-        public string EnrollmentSite { get; set; }
+        public DateTime Created { get; set; }
         public string UseCase { get; set; }
-        public string Governorate { get; set; }
+        public string Brand { get; set; }
         public string LicenseNumber { get; set; }
         public string LicenseNumberLatin { get; set; }
-        public string Usage { get; set; }
+        public string AppChassisNumber { get; set; }
+        public string VehicleType { get; set; }
     }
 }

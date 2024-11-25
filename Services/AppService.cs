@@ -35,9 +35,9 @@ public class AppService
             {
                 await connection.OpenAsync();
 
-                string query = "SELECT APPLICATION_ID, ENROLLMENT_SITE, USE_CASE, GOVERNORATE, LICENSE_NUMBER, LICENSE_NUMBER_LATIN, USAGE " +
-                               "FROM SDMS_IRQDLVR.T_APPLICATION " +
-                               "WHERE APPLICATION_ID = :APPLIC_ID";
+                string query = "SELECT APPLICATION_ID, CREATED, USE_CASE, LICENSE_NUMBER, LICENSE_NUMBER_LATIN, BRAND, APP_CHASSIS_NUMBER, VEHICLE_TYPE  " +
+                              "FROM SDMS_IRQDLVR.T_APPLICATION " +
+                              "WHERE APPLICATION_ID = :APPLIC_ID";
 
                 using (var command = new OracleCommand(query, connection))
                 {
@@ -50,27 +50,26 @@ public class AppService
                             application = new Application
                             {
                                 Application_ID = reader.GetString(reader.GetOrdinal("APPLICATION_ID")),
-                                EnrollmentSite = reader.IsDBNull(reader.GetOrdinal("ENROLLMENT_SITE"))? null // add nullable in db (maybe return null value)
-
-                                    : reader.GetString(reader.GetOrdinal("ENROLLMENT_SITE")),
-                                UseCase = reader.IsDBNull(reader.GetOrdinal("USE_CASE"))? null  // add nullable in db (maybe return null value)
-
+                                Created = reader.GetDateTime(reader.GetOrdinal("CREATED")),
+                                UseCase = reader.IsDBNull(reader.GetOrdinal("USE_CASE"))
+                                    ? null
                                     : reader.GetString(reader.GetOrdinal("USE_CASE")),
-                                Governorate = reader.IsDBNull(reader.GetOrdinal("GOVERNORATE"))? null // add nullable in db (maybe return null value)
-
-                                    : reader.GetString(reader.GetOrdinal("GOVERNORATE")),
                                 LicenseNumber = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER"))
-                                    ? null                                                               // add nullable in db (maybe return null value)
-
+                                    ? null
                                     : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER")),
                                 LicenseNumberLatin = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER_LATIN"))
-                                    ? null                                                                 // add nullable in db (maybe return null value)
-
-                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
-                                Usage = reader.IsDBNull(reader.GetOrdinal("USAGE"))
                                     ? null
-                                    : reader.GetString(reader.GetOrdinal("USAGE")),
-                            };
+                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
+                                Brand = reader.IsDBNull(reader.GetOrdinal("BRAND"))
+                                    ? null
+                                    : reader.GetString(reader.GetOrdinal("BRAND")),
+                                AppChassisNumber = reader.IsDBNull(reader.GetOrdinal("APP_CHASSIS_NUMBER"))
+                                    ? null
+                                    : reader.GetString(reader.GetOrdinal("APP_CHASSIS_NUMBER")),
+                                VehicleType = reader.IsDBNull(reader.GetOrdinal("VEHICLE_TYPE"))
+                                    ? null
+                                    : reader.GetString(reader.GetOrdinal("VEHICLE_TYPE")),
+                                            };
 
                             // Cache the result for a specified time (e.g., 5 minutes)
                             _cache.Set(applicationId, application, TimeSpan.FromMinutes(5));
@@ -89,77 +88,6 @@ public class AppService
         }
 
         return application;
-    }
-
-    // Implement Pagination
-    public async Task<List<Application>> GetAppsAsync(int pageNumber, int pageSize)
-    {
-        List<Application> applications = new List<Application>();
-
-        try
-        {
-            using (var connection = new OracleConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                string query = @"
-                    SELECT * FROM (
-                        SELECT APPLICATION_ID, ENROLLMENT_SITE, USE_CASE, GOVERNORATE, LICENSE_NUMBER, LICENSE_NUMBER_LATIN, USAGE,
-                               ROW_NUMBER() OVER (ORDER BY APPLICATION_ID) AS RowNum
-                        FROM SDMS_IRQDLVR.T_APPLICATION
-                    ) AS PagedData
-                    WHERE RowNum BETWEEN :StartRow AND :EndRow";
-
-                using (var command = new OracleCommand(query, connection))
-                {
-                    // Calculate the row range based on the page number and page size
-                    int startRow = (pageNumber - 1) * pageSize + 1;
-                    int endRow = pageNumber * pageSize;
-
-                    command.Parameters.Add(":StartRow", OracleDbType.Int32).Value = startRow;
-                    command.Parameters.Add(":EndRow", OracleDbType.Int32).Value = endRow;
-
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            applications.Add(new Application
-                            {
-                                Application_ID = reader.GetString(reader.GetOrdinal("APPLICATION_ID")),
-                                EnrollmentSite = reader.IsDBNull(reader.GetOrdinal("ENROLLMENT_SITE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("ENROLLMENT_SITE")),
-                                UseCase = reader.IsDBNull(reader.GetOrdinal("USE_CASE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("USE_CASE")),
-                                Governorate = reader.IsDBNull(reader.GetOrdinal("GOVERNORATE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("GOVERNORATE")),
-                                LicenseNumber = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER")),
-                                LicenseNumberLatin = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER_LATIN"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
-                                Usage = reader.IsDBNull(reader.GetOrdinal("USAGE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("USAGE")),
-                            });
-                        }
-                    }
-                }
-            }
-        }
-        catch (OracleException ex)
-        {
-            throw new Exception("Database operation failed", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("An unexpected error occurred while fetching user data.", ex);
-        }
-
-        return applications;
     }
 }
 

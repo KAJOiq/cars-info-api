@@ -16,11 +16,11 @@ namespace ApiAppPay.Controllers
             _AppService = AppService;
         }
 
-        [HttpGet("{Appid}")]
+        [HttpGet("{appid}")]
         [Authorize]
-        public async Task<IActionResult> GetAppById(long Appid)
+        public async Task<IActionResult> GetAppById(long appid)
         {
-            var App = await _AppService.GetAppByIdAsync(Appid);
+            var App = await _AppService.GetAppByIdAsync(appid);
 
             if (App == null)
             {
