@@ -35,9 +35,34 @@ public class AppService
             {
                 await connection.OpenAsync();
 
-                string query = "SELECT APPLICATION_ID, CREATED, USE_CASE, LICENSE_NUMBER, LICENSE_NUMBER_LATIN, BRAND, APP_CHASSIS_NUMBER, VEHICLE_TYPE  " +
-                              "FROM SDMS_IRQDLVR.T_APPLICATION " +
-                              "WHERE APPLICATION_ID = :APPLIC_ID";
+                string query = @"
+                SELECT 
+                    T_APPLICATION.APPLICATION_ID, 
+                    T_APPLICANT.GIVEN_NAME, 
+                    T_APPLICANT.FATHER_NAME, 
+                    T_APPLICANT.GRANDFATHER_NAME, 
+                    T_APPLICANT.MOTHER_NAME, 
+                    T_APPLICATION.LICENSE_NUMBER, 
+                    T_APPLICATION.LICENSE_NUMBER_LATIN, 
+                    T_APPLICATION.GOVERNORATE, 
+                    T_APPLICATION.USAGE, 
+                    T_APPLICATION.PASSENGERS, 
+                    T_APPLICATION.VEHICLE_CATEGORY, 
+                    T_APPLICATION.CYLINDERS, 
+                    T_APPLICATION.AXIS, 
+                    T_APPLICATION.CABIN_TYPE, 
+                    T_APPLICATION.LOAD_WEIGHT
+                FROM 
+                    SDMS_IRQDLVR.T_APPLICATION 
+                JOIN 
+                    SDMS_IRQDLVR.T_APPLICATION_APPLICANT 
+                    ON T_APPLICATION.ID = T_APPLICATION_APPLICANT.ID_APPLICATION 
+                JOIN 
+                    SDMS_IRQDLVR.T_APPLICANT 
+                    ON T_APPLICATION_APPLICANT.ID_APPLICANT = T_APPLICANT.ID
+                WHERE 
+                    T_APPLICATION.APPLICATION_ID = :APPLIC_ID";
+
 
                 using (var command = new OracleCommand(query, connection))
                 {
@@ -50,26 +75,21 @@ public class AppService
                             application = new Application
                             {
                                 Application_ID = reader.GetString(reader.GetOrdinal("APPLICATION_ID")),
-                                Created = reader.GetDateTime(reader.GetOrdinal("CREATED")),
-                                UseCase = reader.IsDBNull(reader.GetOrdinal("USE_CASE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("USE_CASE")),
-                                LicenseNumber = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER")),
-                                LicenseNumberLatin = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER_LATIN"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
-                                Brand = reader.IsDBNull(reader.GetOrdinal("BRAND"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("BRAND")),
-                                AppChassisNumber = reader.IsDBNull(reader.GetOrdinal("APP_CHASSIS_NUMBER"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("APP_CHASSIS_NUMBER")),
-                                VehicleType = reader.IsDBNull(reader.GetOrdinal("VEHICLE_TYPE"))
-                                    ? null
-                                    : reader.GetString(reader.GetOrdinal("VEHICLE_TYPE")),
-                                            };
+                                GivenName = reader.IsDBNull(reader.GetOrdinal("GIVEN_NAME")) ? null : reader.GetString(reader.GetOrdinal("GIVEN_NAME")),
+                                FatherName = reader.IsDBNull(reader.GetOrdinal("FATHER_NAME")) ? null : reader.GetString(reader.GetOrdinal("FATHER_NAME")),
+                                GrandfatherName = reader.IsDBNull(reader.GetOrdinal("GRANDFATHER_NAME")) ? null : reader.GetString(reader.GetOrdinal("GRANDFATHER_NAME")),
+                                MotherName = reader.IsDBNull(reader.GetOrdinal("MOTHER_NAME")) ? null : reader.GetString(reader.GetOrdinal("MOTHER_NAME")),
+                                LicenseNumber = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER")) ? null : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER")),
+                                LicenseNumberLatin = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER_LATIN")) ? null : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
+                                Governorate = reader.IsDBNull(reader.GetOrdinal("GOVERNORATE")) ? null : reader.GetString(reader.GetOrdinal("GOVERNORATE")),
+                                Usage = reader.IsDBNull(reader.GetOrdinal("USAGE")) ? null : reader.GetString(reader.GetOrdinal("USAGE")),
+                                Passengers = reader.IsDBNull(reader.GetOrdinal("PASSENGERS")) ? null : reader.GetString(reader.GetOrdinal("PASSENGERS")),
+                                VehicleCategory = reader.IsDBNull(reader.GetOrdinal("VEHICLE_CATEGORY")) ? null : reader.GetString(reader.GetOrdinal("VEHICLE_CATEGORY")),
+                                Cylinders = reader.IsDBNull(reader.GetOrdinal("CYLINDERS")) ? null : reader.GetString(reader.GetOrdinal("CYLINDERS")),
+                                Axis = reader.IsDBNull(reader.GetOrdinal("AXIS")) ? null : reader.GetString(reader.GetOrdinal("AXIS")),
+                                CabinType = reader.IsDBNull(reader.GetOrdinal("CABIN_TYPE")) ? null : reader.GetString(reader.GetOrdinal("CABIN_TYPE")),
+                                LoadWeight = reader.IsDBNull(reader.GetOrdinal("LOAD_WEIGHT")) ? null : reader.GetString(reader.GetOrdinal("LOAD_WEIGHT"))
+                            };
 
                             // Cache the result for a specified time (e.g., 5 minutes)
                             _cache.Set(applicationId, application, TimeSpan.FromMinutes(5));

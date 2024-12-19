@@ -23,8 +23,8 @@ namespace ApplicationsApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthRequest authRequest)
         {
-            var validUsername = "Adminpay";
-            var validPassword = "adminpay0";
+            var validUsername = "10floor";
+            var validPassword = "10floorApi!@";
 
             if (authRequest.Username != validUsername || authRequest.Password != validPassword)
             {
@@ -32,7 +32,7 @@ namespace ApplicationsApi.Controllers
                 return Unauthorized(errorResponse);
             }
 
-            var token = GenerateJwtToken(authRequest.Username, "Adminpay");
+            var token = GenerateJwtToken(authRequest.Username, "role");
             var successResponse = new ApiResponse<object>(true, new { Token = token });
             return Ok(successResponse);
         }
