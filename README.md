@@ -1,9 +1,4 @@
 
-<div style="display: flex; align-items: center;">
-  <h1 style="margin: 0;">Madar Dijla </h1>
-  <img src="" alt="Logo" width="250" style="margin-left: 280px;" />
-</div>
-
 # Application Payment API
 
 ## Postman Test Collection :
