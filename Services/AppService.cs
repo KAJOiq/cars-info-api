@@ -37,7 +37,6 @@ public class AppService
 
                 string query = @"
                 SELECT 
-                    T_APPLICATION.APPLICATION_ID, 
                     T_APPLICANT.GIVEN_NAME, 
                     T_APPLICANT.FATHER_NAME, 
                     T_APPLICANT.GRANDFATHER_NAME, 
@@ -46,7 +45,7 @@ public class AppService
                     T_APPLICATION.LICENSE_NUMBER_LATIN, 
                     T_APPLICATION.GOVERNORATE, 
                     T_APPLICATION.USAGE, 
-                    T_APPLICATION.PASSENGERS, 
+                    T_APPLICATION.SEATS1, 
                     T_APPLICATION.VEHICLE_CATEGORY, 
                     T_APPLICATION.CYLINDERS, 
                     T_APPLICATION.AXIS, 
@@ -74,7 +73,6 @@ public class AppService
                         {
                             application = new Application
                             {
-                                Application_ID = reader.GetString(reader.GetOrdinal("APPLICATION_ID")),
                                 GivenName = reader.IsDBNull(reader.GetOrdinal("GIVEN_NAME")) ? null : reader.GetString(reader.GetOrdinal("GIVEN_NAME")),
                                 FatherName = reader.IsDBNull(reader.GetOrdinal("FATHER_NAME")) ? null : reader.GetString(reader.GetOrdinal("FATHER_NAME")),
                                 GrandfatherName = reader.IsDBNull(reader.GetOrdinal("GRANDFATHER_NAME")) ? null : reader.GetString(reader.GetOrdinal("GRANDFATHER_NAME")),
@@ -83,7 +81,7 @@ public class AppService
                                 LicenseNumberLatin = reader.IsDBNull(reader.GetOrdinal("LICENSE_NUMBER_LATIN")) ? null : reader.GetString(reader.GetOrdinal("LICENSE_NUMBER_LATIN")),
                                 Governorate = reader.IsDBNull(reader.GetOrdinal("GOVERNORATE")) ? null : reader.GetString(reader.GetOrdinal("GOVERNORATE")),
                                 Usage = reader.IsDBNull(reader.GetOrdinal("USAGE")) ? null : reader.GetString(reader.GetOrdinal("USAGE")),
-                                Passengers = reader.IsDBNull(reader.GetOrdinal("PASSENGERS")) ? null : reader.GetString(reader.GetOrdinal("PASSENGERS")),
+                                Passengers = reader.IsDBNull(reader.GetOrdinal("SEATS1")) ? null : reader.GetString(reader.GetOrdinal("SEATS1")),
                                 VehicleCategory = reader.IsDBNull(reader.GetOrdinal("VEHICLE_CATEGORY")) ? null : reader.GetString(reader.GetOrdinal("VEHICLE_CATEGORY")),
                                 Cylinders = reader.IsDBNull(reader.GetOrdinal("CYLINDERS")) ? null : reader.GetString(reader.GetOrdinal("CYLINDERS")),
                                 Axis = reader.IsDBNull(reader.GetOrdinal("AXIS")) ? null : reader.GetString(reader.GetOrdinal("AXIS")),

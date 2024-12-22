@@ -4,7 +4,6 @@ namespace ApiAppPay.Models
 {
     public class Application
     {
-        public string Application_ID { get; set; }
         public string GivenName { get; set; }
         public string FatherName { get; set; }
         public string GrandfatherName { get; set; }
