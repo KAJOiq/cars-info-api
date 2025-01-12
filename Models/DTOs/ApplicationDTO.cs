@@ -1,8 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ApiAppPay.Models
+﻿namespace ApiAppPay.Models.DTOs
 {
-    public class Application
+    public class ApplicationDTO
     {
         public string? GivenName { get; set; }
         public string? FatherName { get; set; }
@@ -24,13 +22,9 @@ namespace ApiAppPay.Models
         public DateTime? DateOfIssue { get; set; }
         public DateTime? DateOfExpiry { get; set; }
         public DateTime? CustomsApplyDate { get; set; }
-        public string? Tpid { get; set; }
-        public string? ApplicationType { get; set; }
-        public string? VichleId { get; set; }
-        public int? IdCurrentState { get; set; }
 
-        public Application() { }
-      public Application(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, DateTime? customsApplyDate, string tpid, string applicationType, string vichleId, int? idCurrentState)
+        public ApplicationDTO() { }
+        public ApplicationDTO(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, DateTime? customsApplyDate)
         {
             GivenName = givenName;
             FatherName = fatherName;
@@ -52,10 +46,7 @@ namespace ApiAppPay.Models
             DateOfIssue = dateOfIssue;
             DateOfExpiry = dateOfExpiry;
             CustomsApplyDate = customsApplyDate;
-            Tpid = tpid;
-            ApplicationType = applicationType;
-            VichleId = vichleId;
-            IdCurrentState = idCurrentState;
+  
         }
     }
 }

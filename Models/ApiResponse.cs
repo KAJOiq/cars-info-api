@@ -1,15 +1,16 @@
-﻿namespace ApiAppPay.Models
+﻿namespace ApiAppPay.Models.Responses
 {
     public class ApiResponse<T>
-    { 
+    {
         public bool IsSuccess { get; set; }
         public T Results { get; set; }
-        public List<string> Errors { get; set; }
-        public ApiResponse(bool isSuccess, T results, List<string> errors = null)
-        {
-            IsSuccess = isSuccess;
-            Results = results;
-            Errors = errors ?? new List<string>();
-        }
+        public IList<Error> Errors { get; set; }
     }
+
+    public class Error
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
+    }
+
 }

@@ -5,13 +5,15 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ApiAppPay.Models; 
+using ApiAppPay.Models;
+using ApiAppPay.Controllers;
+using ApiAppPay.Models.Responses;
 
 namespace ApplicationsApi.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private readonly IConfiguration _configuration;
 
@@ -28,13 +30,12 @@ namespace ApplicationsApi.Controllers
 
             if (authRequest.Username != validUsername || authRequest.Password != validPassword)
             {
-                var errorResponse = new ApiResponse<object>(false, null, new List<string> { "Invalid credentials" });
-                return Unauthorized(errorResponse);
+               
+                return BadRequest(CreateErrorResponse(StatusCodes.Status401Unauthorized.ToString(), "Invalid credentials"));
             }
-
-            var token = GenerateJwtToken(authRequest.Username, "role");
-            var successResponse = new ApiResponse<object>(true, new { Token = token });
-            return Ok(successResponse);
+            var token=new LoginResponse(GenerateJwtToken(authRequest.Username, "role"));
+  
+            return Ok(CreateSuccessResponse(token));
         }
 
         private string GenerateJwtToken(string username, string role)
