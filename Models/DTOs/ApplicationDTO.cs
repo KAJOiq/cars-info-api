@@ -18,13 +18,11 @@
         public string? Axis { get; set; }
         public string? CabinType { get; set; }
         public string? LoadWeight { get; set; }
-        public string? DlCategory { get; set; }
         public DateTime? DateOfIssue { get; set; }
         public DateTime? DateOfExpiry { get; set; }
-        public DateTime? CustomsApplyDate { get; set; }
-
+        public string? DlCategory { get; set; }
         public ApplicationDTO() { }
-        public ApplicationDTO(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, DateTime? customsApplyDate)
+        public ApplicationDTO(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry)
         {
             GivenName = givenName;
             FatherName = fatherName;
@@ -42,11 +40,9 @@
             Axis = axis;
             CabinType = cabinType;
             LoadWeight = loadWeight;
-            DlCategory = dlCategory;
             DateOfIssue = dateOfIssue;
             DateOfExpiry = dateOfExpiry;
-            CustomsApplyDate = customsApplyDate;
-  
-        }
+            DlCategory = dlCategory;
+    }
     }
 }

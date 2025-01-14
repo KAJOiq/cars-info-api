@@ -29,16 +29,6 @@ namespace ApiAppPay.Controllers
                 return NotFound(CreateErrorResponse(StatusCodes.Status404NotFound.ToString(), "Application not found."));
             }
 
-            if ((App.IdCurrentState < 38 && App.ApplicationType == "irq_vr") || (App.IdCurrentState < 17 && App.ApplicationType == "irq_dl"))
-            {
-                return BadRequest(CreateErrorResponse(StatusCodes.Status400BadRequest.ToString(), "Application not set to payment."));
-            }
-            if ((App.IdCurrentState > 38 && App.ApplicationType == "irq_vr") ||  ( App.IdCurrentState > 17 && App.ApplicationType == "irq_dl"))
-            {
-                return BadRequest(CreateErrorResponse(StatusCodes.Status400BadRequest.ToString(), "Application fees already paid."));
-            }
-
-          
             ApplicationDTO applicationDTO = new ApplicationDTO
             {
                 GivenName=App.GivenName,
@@ -57,11 +47,10 @@ namespace ApiAppPay.Controllers
                 Axis = App.Axis,
                 CabinType = App.CabinType,
                 LoadWeight = App.LoadWeight,
-                DlCategory = App.DlCategory,
                 DateOfIssue = App.DateOfIssue,
                 DateOfExpiry = App.DateOfExpiry,
-                CustomsApplyDate = App.CustomsApplyDate
-
+       
+                DlCategory=App.DlCategory
             };
             return Ok(CreateSuccessResponse(applicationDTO));
         }

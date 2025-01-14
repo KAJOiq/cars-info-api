@@ -4,6 +4,7 @@ namespace ApiAppPay.Models
 {
     public class Application
     {
+        public long? Id { get; set; }
         public string? GivenName { get; set; }
         public string? FatherName { get; set; }
         public string? GrandfatherName { get; set; }
@@ -20,18 +21,18 @@ namespace ApiAppPay.Models
         public string? Axis { get; set; }
         public string? CabinType { get; set; }
         public string? LoadWeight { get; set; }
-        public string? DlCategory { get; set; }
         public DateTime? DateOfIssue { get; set; }
         public DateTime? DateOfExpiry { get; set; }
-        public DateTime? CustomsApplyDate { get; set; }
         public string? Tpid { get; set; }
-        public string? ApplicationType { get; set; }
+        public int? ApplicationType { get; set; }
         public string? VichleId { get; set; }
         public int? IdCurrentState { get; set; }
+        public string? DlCategory { get; set; }
 
         public Application() { }
-      public Application(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, DateTime? customsApplyDate, string tpid, string applicationType, string vichleId, int? idCurrentState)
+      public Application(long id, string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, string tpid, int applicationType, string vichleId, int? idCurrentState)
         {
+            Id = id;
             GivenName = givenName;
             FatherName = fatherName;
             GrandfatherName = grandfatherName;
@@ -51,7 +52,6 @@ namespace ApiAppPay.Models
             DlCategory = dlCategory;
             DateOfIssue = dateOfIssue;
             DateOfExpiry = dateOfExpiry;
-            CustomsApplyDate = customsApplyDate;
             Tpid = tpid;
             ApplicationType = applicationType;
             VichleId = vichleId;

@@ -21,7 +21,7 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
 ## Endpoints :
 
 ### 1. Login and Get Bearer Token
-   - **Endpoint:** `POST http://172.28.1.120:8050/api/auth/login`
+   - **Endpoint:** `POST http://localhost:8050/api/auth/login`
    - **Note:** we will give you `username` and `password` privately.
    - **Request:**
      ```json
@@ -36,7 +36,7 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
        {
          "isSuccess": true,
          "results": {
-           "token": "***********************************************************
+           "Token": "***********************************************************
              ************************************************"
          },
          "errors": []
@@ -44,16 +44,21 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
        ```
      - **Error (401):**
        ```json
-       {
-         "isSuccess": false,
-         "results": null,
-         "errors": ["Invalid credentials"]
-       }
+        {
+            "isSuccess": false,
+            "results": null,
+            "errors": [
+                {
+                    "code": "401",
+                    "message": "Invalid credentials"
+                }
+            ]
+        }
        ```
    
 
 ### 2. Get Application Data 
-   - **Endpoint:** `GET http://172.28.1.120:8050/api/user/:appid`
+   - **Endpoint:** `GET http://localhost:8050/api/user/:appid`
    - **Request Parameters:**
      - `appid`: Application ID (send in long format).
    - **Headers:**
@@ -79,6 +84,8 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
                 "fatherName": "اسم الاب",
                 "grandfatherName": "اسم الجد",
                 "motherName": "اسم الام",
+                "motherFatherName": "اسم اب الام",
+                "UseCase": "نوع المعاملة",
                 "licenseNumber": "رقم السيارة بالعربي",
                 "licenseNumberLatin": "رقم السيارة بالانكليزي",
                 "governorate": "المحافظة",
@@ -88,22 +95,31 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
                 "cylinders": "عدد الاسطوانات",
                 "axis": "اذا كانت دفع رباعي .. الخ",
                 "cabinType": "اعتيادي او مصفح .. الخ",
-                "loadWeight": "وزن الحمولة للحمل"
+                "loadWeight": "وزن الحمولة للحمل",
+                "dateOfIssue": "تاريخ الإصدار",
+                "dateOfExpiry": "تاريخ النفاذ",
+                "dlCategory": "الفئة الخاصة بالإجازات فقط"
+
             },
             "errors": []
         }
        ```
      - **Error (404):**
        ```json
-       {
-         "isSuccess": false,
-         "results": null,
-         "errors": ["Application not found"]
-       }
+        {
+            "isSuccess": false,
+            "results": null,
+            "errors": [
+                {
+                    "code": "404",
+                    "message": "Application not found."
+                }
+            ]
+        }
        ```
-
 ---
 ## Notes :
 
 - You must include the Bearer token in the `Authorization` header when requesting application data.
 - The Bearer token will expire 24 hours after creation.
+- Some fields may be null based on Application Type.
