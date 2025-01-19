@@ -50,7 +50,8 @@ namespace ApiAppPay.Controllers
                 DateOfIssue = App.DateOfIssue,
                 DateOfExpiry = App.DateOfExpiry,
        
-                DlCategory=App.DlCategory
+                DlCategory=App.DlCategory,
+                IdCurrentState=App.IdCurrentState
             };
             return Ok(CreateSuccessResponse(applicationDTO));
         }

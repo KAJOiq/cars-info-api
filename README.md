@@ -98,8 +98,8 @@ The name of Collection `APP_API_PAY.postman_collection.json`.
                 "loadWeight": "وزن الحمولة للحمل",
                 "dateOfIssue": "تاريخ الإصدار",
                 "dateOfExpiry": "تاريخ النفاذ",
-                "dlCategory": "الفئة الخاصة بالإجازات فقط"
-
+                "dlCategory": "الفئة الخاصة بالإجازات فقط",
+                "idCurrentState": "حالة المعاملة (لأي مرحلة وصلت)"
             },
             "errors": []
         }

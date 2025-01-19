@@ -21,8 +21,9 @@
         public DateTime? DateOfIssue { get; set; }
         public DateTime? DateOfExpiry { get; set; }
         public string? DlCategory { get; set; }
+        public int? IdCurrentState { get; set; }
         public ApplicationDTO() { }
-        public ApplicationDTO(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry)
+        public ApplicationDTO(string? givenName, string? fatherName, string? grandfatherName, string? motherName, string? motherFatherName, string? useCase, string? licenseNumber, string? licenseNumberLatin, string? governorate, string? usage, string? passengers, string? vehicleCategory, string? cylinders, string? axis, string? cabinType, string? loadWeight, string? dlCategory, DateTime? dateOfIssue, DateTime? dateOfExpiry, int? idCurrentState)
         {
             GivenName = givenName;
             FatherName = fatherName;
@@ -43,6 +44,7 @@
             DateOfIssue = dateOfIssue;
             DateOfExpiry = dateOfExpiry;
             DlCategory = dlCategory;
-    }
+            IdCurrentState = idCurrentState;
+        }
     }
 }
